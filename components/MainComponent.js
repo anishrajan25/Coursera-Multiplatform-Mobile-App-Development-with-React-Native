@@ -12,13 +12,13 @@ const MenuNavigator = createStackNavigator({
   {
     initialRouteName: 'Menu',
     navigationOptions: {
-        headerStyle: {
-            backgroundColor: "#512DA8"
-        },
-        headerTintColor: '#fff', // for icons
-        headerTitleStyle: {
-            color: "#fff"            
-        }
+      headerStyle: {
+          backgroundColor: "#512DA8"
+      },
+      headerTintColor: '#fff', // for icons
+      headerTitleStyle: {
+          color: "#fff"            
+      }
     }
 });
 
@@ -60,7 +60,7 @@ class Main extends Component {
   
   render() {
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
             <MainNavigator />
         </View>
     );
