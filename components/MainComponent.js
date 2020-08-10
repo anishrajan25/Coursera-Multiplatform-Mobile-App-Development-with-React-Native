@@ -1,41 +1,67 @@
 import React, { Component } from 'react';
+import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
-import { DISHES } from '../shared/dishes';
 import { View, Platform } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
-class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dishes: DISHES,
-    };
-  }
-
-  render() {
-
-    const MenuNavigator = createStackNavigator({
-        Menu: { screen: Menu },
-        Dishdetail: { screen: Dishdetail }
-    },
-    {
-        initialRouteName: 'Menu',
-        navigationOptions: {
-            headerStyle: {
-                backgroundColor: "#512DA8"
-            },
-            headerTintColor: '#fff', // for icons
-            headerTitleStyle: {
-                color: "#fff"            
-            }
+const MenuNavigator = createStackNavigator({
+    Menu: { screen: Menu },
+    Dishdetail: { screen: Dishdetail }
+  },
+  {
+    initialRouteName: 'Menu',
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: "#512DA8"
+        },
+        headerTintColor: '#fff', // for icons
+        headerTitleStyle: {
+            color: "#fff"            
         }
     }
-    );
- 
+});
+
+const HomeNavigator = createStackNavigator({
+  Home: { screen: Home },
+  },
+  {
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: "#512DA8"
+        },
+        headerTintColor: '#fff', // for icons
+        headerTitleStyle: {
+            color: "#fff"            
+        }
+    }
+});
+
+const MainNavigator = createDrawerNavigator({
+  Home: { 
+    screen: HomeNavigator,
+    navigationOptions: {
+      title: 'Home',
+      drawerLabel: 'Home'
+    }
+  },
+  Menu: {
+    screen: MenuNavigator,
+    navigationOptions: {
+      title: 'Menu',
+      drawerLabel: 'Menu'
+    }
+  }
+  },{
+  drawerBackgroundColor: '#D1C4E9',
+});
+
+class Main extends Component {
+  
+  render() {
     return (
         <View style={{flex:1}}>
-            <MenuNavigator />
+            <MainNavigator />
         </View>
     );
   }
