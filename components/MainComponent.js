@@ -7,10 +7,25 @@ import Dishdetail from './DishdetailComponent';
 import { View, Platform, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from "react-native-elements";
+import { connect } from 'react-redux';
+import { fetchComments, fetchDishes, fetchLeaders, fetchPromos } from "../redux/ActionCreaters";
+
+const mapStateToProps = state => {
+  return {
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+})
 
 const MenuNavigator = createStackNavigator({
-    Menu: { screen: Menu,
+    Menu: { screen: ({navigation}) => <Menu navigation={navigation}/>,
       navigationOptions: ({ navigation }) => ({
+        title: 'Menu',
         headerLeft: <Icon name='menu' size={24}
           color='white'
           onPress={() => navigation.toggleDrawer()} 
@@ -20,11 +35,12 @@ const MenuNavigator = createStackNavigator({
     // navigationOptions can also be implemented as functions
     // here it recieves navigation props as a parameter
     // here from the navigation props we are extracting navigation
-    Dishdetail: { screen: Dishdetail }
+    Dishdetail: { screen: () =>  <Dishdetail /> }
   },
   {
     initialRouteName: 'Menu',
     navigationOptions: {
+      title: 'Dish Details',
       headerStyle: {
           backgroundColor: "#512DA8"
       },
@@ -36,10 +52,11 @@ const MenuNavigator = createStackNavigator({
 });
 
 const HomeNavigator = createStackNavigator({
-  Home: { screen: Home },
+  Home: { screen: () => <Home /> },
   },
   {
     navigationOptions: ({ navigation }) => ({
+        title: 'Home',
         headerStyle: {
             backgroundColor: "#512DA8"
         },
@@ -55,10 +72,11 @@ const HomeNavigator = createStackNavigator({
 });
 
 const ContactNavigator = createStackNavigator({
-  Contact: { screen: Contact },
+  Contact: { screen: () => <Contact/> },
   },
   {
     navigationOptions: ({ navigation }) => ({
+        title: 'Contact Us',
         headerStyle: {
             backgroundColor: "#512DA8"
         },
@@ -74,10 +92,11 @@ const ContactNavigator = createStackNavigator({
 });
 
 const AboutNavigator = createStackNavigator({
-  About: { screen: About },
+  About: { screen: () => <About/> },
   },
   {
     navigationOptions: ({ navigation }) => ({
+        title: 'About Us',
         headerStyle: {
             backgroundColor: "#512DA8"
         },
@@ -181,9 +200,16 @@ const MainNavigator = createDrawerNavigator({
 
 class Main extends Component {
   
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
+
   render() {
     return (
-        <View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
+        <View style={{flex:1}}>
             <MainNavigator />
         </View>
     );
@@ -214,4 +240,4 @@ const styles = StyleSheet.create({
   }
 });
   
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

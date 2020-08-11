@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
-import { DISHES } from '../shared/dishes';
-import { COMMENTS } from '../shared/comments';
+import { connect } from 'react-redux'
+import { baseUrl } from "../shared/baseUrl";
+import { withNavigation } from "react-navigation";
+import { postFavorite } from "../redux/ActionCreaters";
+
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        favorites: state.favorites
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    postFavorite: (dishId) => dispatch(postFavorite(dishId))
+})
 
 function RenderDish(props) {
 
@@ -12,7 +26,7 @@ function RenderDish(props) {
             return(
                 <Card
                     featuredTitle={dish.name}
-                    image={require('./images/uthappizza.png')}
+                    image={{ uri: baseUrl + dish.image }}
                 >
                     <Text style={{margin: 10}}>
                         {dish.description}
@@ -59,17 +73,8 @@ function RenderComments(props) {
 
 class Dishdetail extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            dishes: DISHES,
-            comments: COMMENTS,
-            favourites: []
-        };
-    }
-
     markFavourite(dishId) {
-        this.setState({ favourites: this.state.favourites.concat(dishId)})
+        this.props.postFavorite(dishId);
     }
 
     static navigationOptions = {
@@ -77,17 +82,18 @@ class Dishdetail extends Component {
     };
 
     render() {
+        console.log(this.props);
         const dishId = this.props.navigation.getParam('dishId','');
         return(
             <ScrollView>
-                <RenderDish dish={this.state.dishes[+dishId]}
-                    favourite={this.state.favourites.some(el => el === dishId)}//returns true if there exists an item in array if that matches the function
+                <RenderDish dish={this.props.dishes.dishes[+dishId]}
+                    favourite={this.props.favorites.some(el => el === dishId)}//returns true if there exists an item in array if that matches the function
                     onPress={() => this.markFavourite(dishId)}
                 />
-                <RenderComments comments={this.state.comments.filter((comment) => comment.dishId === dishId)} />
+                <RenderComments comments={this.props.comments.comments.filter((comment) => comment.dishId === dishId)} />
             </ScrollView>
         );
     }
 }
 
-export default Dishdetail;
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Dishdetail));
