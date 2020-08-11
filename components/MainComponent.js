@@ -4,6 +4,7 @@ import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import About from "./AboutComponent";
 import Dishdetail from './DishdetailComponent';
+import Reservation from "./ReservationComponent";
 import { View, Platform, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from "react-native-elements";
@@ -111,6 +112,26 @@ const AboutNavigator = createStackNavigator({
     })
 });
 
+const ReservationNavigator = createStackNavigator({
+  About: { screen: () => <Reservation/> },
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+        title: 'Reservation',
+        headerStyle: {
+            backgroundColor: "#512DA8"
+        },
+        headerTintColor: '#fff', // for icons
+        headerTitleStyle: {
+            color: "#fff"            
+        },
+        headerLeft: <Icon name='menu' size={24}
+          color='white'
+          onPress={() => navigation.toggleDrawer()} 
+        />
+    })
+});
+
 const CustomDrawerContentComponent = (props) => (
   <ScrollView>
     <SafeAreaView style={styles.container}
@@ -192,10 +213,26 @@ const MainNavigator = createDrawerNavigator({
         />
       )
     }
+  },
+  Reservation: {
+    screen: ReservationNavigator,
+    navigationOptions: {
+      title: 'Reserve Table',
+      drawerLabel: 'Reserve Table',
+      drawerIcon: ({ tintColor }) => (
+        <Icon
+          name='cutlery'
+          type='font-awesome'
+          size={24}
+          color={tintColor}
+        />
+      )
+    }
   }
   }, {
   drawerBackgroundColor: '#D1C4E9',
-  contentComponent: CustomDrawerContentComponent //to specify content layout
+  contentComponent: CustomDrawerContentComponent, //to specify content layout
+  drawerPosition: "left"
 });
 
 class Main extends Component {
@@ -209,7 +246,7 @@ class Main extends Component {
 
   render() {
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight  }}>
             <MainNavigator />
         </View>
     );
