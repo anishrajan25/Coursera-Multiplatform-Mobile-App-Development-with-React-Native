@@ -115,8 +115,7 @@ export default class Reservation extends Component {
                         <Button 
                             onPress={() => {this.toggleModal(); this.resetForm()} }
                             color='#512DAB'
-                            title='Close'
-                            />
+                            title='Close'                          />
                     </View>
                 </Modal>
             </ScrollView>
