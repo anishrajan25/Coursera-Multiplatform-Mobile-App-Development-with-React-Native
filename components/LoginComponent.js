@@ -219,11 +219,20 @@ class RegisterTab extends Component {
             });
             
             if(!capturedImage.cancelled) {
-                this.setState({
-                    imageUrl: capturedImage.uri
-                });
+                this.processImage(capturedImage.uri);
             }
         }
+    }
+
+    processImage = async (imageUri) => {
+        const newImage = await ImageManipulator.manipulateAsync(
+            imageUri,
+            [
+                {resize: {width: 400}}
+            ],
+            {format: 'png'}
+        );
+        this.setState({ imageUrl: newImage.uri });
     }
 
     handleRegister() {
