@@ -134,23 +134,32 @@ const ReservationNavigator = createStackNavigator({
 });
 
 const FavoritesNavigator = createStackNavigator({
-  Favorites: { screen: ({navigation}) => <Favorites navigation={navigation}/>}
+Favorites: { screen: ({navigation}) => <Favorites navigation={navigation}/>,
+  navigationOptions: ({ navigation }) => ({
+    title: 'My Favorites',
+    headerLeft: <Icon name='menu' size={24}
+      color='white'
+      onPress={() => navigation.toggleDrawer()} 
+    />
+  }) 
+},
+// navigationOptions can also be implemented as functions
+// here it recieves navigation props as a parameter
+// here from the navigation props we are extracting navigation
+Dishdetail: { screen: () =>  <Dishdetail /> }
+},
+{
+initialRouteName: 'Favorites',
+navigationOptions: {
+  title: 'Dish Details',
+  headerStyle: {
+      backgroundColor: "#512DA8"
   },
-  {
-    navigationOptions: ({ navigation }) => ({
-        title: 'My Favorites',
-        headerStyle: {
-            backgroundColor: "#512DA8"
-        },
-        headerTintColor: '#fff', // for icons
-        headerTitleStyle: {
-            color: "#fff"            
-        },
-        headerLeft: <Icon name='menu' size={24}
-          color='white'
-          onPress={() => navigation.toggleDrawer()} 
-        />
-    })
+  headerTintColor: '#fff', // for icons
+  headerTitleStyle: {
+      color: "#fff"            
+  }
+}
 });
 
 const CustomDrawerContentComponent = (props) => (
