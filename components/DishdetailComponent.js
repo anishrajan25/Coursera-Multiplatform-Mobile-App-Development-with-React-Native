@@ -24,6 +24,8 @@ function RenderDish(props) {
 
     const dish = props.dish;
 
+    handlViewRef = ref => this.view = ref;
+
     const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
         // swipe from right to left of 200 px
         if(dx < -200)
@@ -36,6 +38,12 @@ function RenderDish(props) {
         // called when gesture begins to happen on screen
         onStartShouldSetPanResponder: (e, gestureState) => {
             return true;
+        },
+        // called when panResponder starts recognizing a gesture
+        // and it has been granted the permission to respond to the pan gesture or screen 
+        onPanResponderGrant: () => {
+            this.view.rubberBand(1000)
+            .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
         },
         onPanResponderEnd: (e, gestureState) => {
             if(recognizeDrag(gestureState)) {
@@ -64,6 +72,7 @@ function RenderDish(props) {
         if (dish != null) {
             return(
                 <Animatable.View animation='fadeInDown' duration={2000} delay={1000}
+                    ref={this.handlViewRef}
                     {...panResponder.panHandlers}>
                     <Card
                         featuredTitle={dish.name}
