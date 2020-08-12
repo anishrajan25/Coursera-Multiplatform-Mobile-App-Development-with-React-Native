@@ -5411,6 +5411,13 @@ react-native-animatable@^1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-animated-swipeout@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/react-native-animated-swipeout/-/react-native-animated-swipeout-2.0.14.tgz#7764766fd4df0c17f2fb92973e265912b4996bda"
+  integrity sha1-d2R2b9TfDBfy+5KXPiZZErSZa9o=
+  dependencies:
+    react-tween-state "^0.1.3"
+
 react-native-datepicker@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
@@ -5516,10 +5523,10 @@ react-native-status-bar-height@^2.5.0:
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha512-sYBCPYA/NapBSHkdm/IVL4ID3LLlIuLqINi2FBDyMkc2BU9pfSGOtkz9yfxoK39mYJuTrlTOQ7mManARUsYDSA==
 
-react-native-swipeout@^2.3.6:
-  version "2.3.6"
-  resolved "https://registry.yarnpkg.com/react-native-swipeout/-/react-native-swipeout-2.3.6.tgz#47dac8a835825cf3f2eef9e495574a3d9ab6d3fa"
-  integrity sha512-t9suUCspzck4vp2pWggWe0frS/QOtX6yYCawHnEes75A7dZCEE74bxX2A1bQzGH9cUMjq6xsdfC94RbiDKIkJg==
+react-native-swipeout@2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-swipeout/-/react-native-swipeout-2.3.3.tgz#3b99db845ef75f0bfa467f1d8de0b7f7946326bd"
+  integrity sha512-q8cC30peGBH6m5rPG7PvJ4fQFxFMixzCdjeg/4DqwP66R8B2fxXtzWhV7XbOouS6O4VaXZdQDFKDwizma44fjg==
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
@@ -5677,7 +5684,7 @@ react-timer-mixin@^0.13.4:
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
   integrity sha512-4+ow23tp/Tv7hBM5Az5/Be/eKKF7DIvJ09voz5LyHGQaqqz9WV8YMs31eFvcYQs7d451LSg7kDJV70XYN/Ug/Q==
 
-react-tween-state@^0.1.5:
+react-tween-state@^0.1.3, react-tween-state@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/react-tween-state/-/react-tween-state-0.1.5.tgz#e98b066551efb93cb92dd1be14995c2e3deae339"
   integrity sha1-6YsGZVHvuTy5LdG+FJlcLj3q4zk=
