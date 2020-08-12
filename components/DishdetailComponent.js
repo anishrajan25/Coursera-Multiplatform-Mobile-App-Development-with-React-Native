@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { baseUrl } from "../shared/baseUrl";
 import { withNavigation } from "react-navigation";
 import { postFavorite, postComment } from "../redux/ActionCreaters";
+import * as Animatable from 'react-native-animatable';
 
 const mapStateToProps = state => {
     return {
@@ -25,69 +26,71 @@ function RenderDish(props) {
     
         if (dish != null) {
             return(
-                <Card
-                    featuredTitle={dish.name}
-                    image={{ uri: baseUrl + dish.image }}
-                >
-                    <Text style={{margin: 10}}>
-                        {dish.description}
-                    </Text>
-                    <View style={{justifyContent: 'center', flex: 1, flexDirection: 'row'}}>
-                        <Icon 
-                            raised //shows it like a button
-                            reverse //icon of one color and surrounding of another
-                            name={ props.favourite ? 'heart' : 'heart-o'}
-                            type='font-awesome'
-                            color='#f50'
-                            onPress={() => props.favourite ? console.log('Already favourite') : props.onPress() } 
-                        />
-                        <Icon 
-                            raised //shows it like a button
-                            reverse //icon of one color and surrounding of another
-                            name={ 'pencil'}
-                            type='font-awesome'
-                            color='#512DAB'
-                            onPress={() => props.toggleModal() } 
-                        />
-                    </View>
-                    <Modal
-                        animationType={'slide'}
-                        transparent={false}
-                        visible={props.showModal}
-                        onDismiss={() => {props.toggleModal(); props.resetForm()} }
-                        onRequestClose={() => {props.toggleModal(); props.resetForm()}} // kind of similar to dismiss
-                        >
-                        <View style={styles.modal}>
-                            <Rating showRating fractions="{1}" startingValue="{3.3}" onFinishRating={(value) => props.comment.rating = value} />
-                            <Input
-                                placeholder="Author"
-                                leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                                onChangeText={(value) => props.comment.author = value}
-                                />
-                            <Input
-                                placeholder="Comment"
-                                leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
-                                onChangeText={(value) => props.comment.comment = value}
-                                />
-                            <View style={{margin: 20}}>
-                                <Button 
-                                    raised
-                                    onPress={() => {props.toggleModal(); props.submitForm(props.comment)} }
-                                    color='#512DAB'
-                                    title='SUBMIT'
-                                    />
-                            </View>
-                            <View style={{margin: 20}}>
-                                <Button 
-                                    raised
-                                    color='grey'
-                                    title='CANCEL'
-                                    onPress={() => {props.toggleModal(); props.resetForm()}}
-                                    />
-                            </View>
+                <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
+                    <Card
+                        featuredTitle={dish.name}
+                        image={{ uri: baseUrl + dish.image }}
+                    >
+                        <Text style={{margin: 10}}>
+                            {dish.description}
+                        </Text>
+                        <View style={{justifyContent: 'center', flex: 1, flexDirection: 'row'}}>
+                            <Icon 
+                                raised //shows it like a button
+                                reverse //icon of one color and surrounding of another
+                                name={ props.favourite ? 'heart' : 'heart-o'}
+                                type='font-awesome'
+                                color='#f50'
+                                onPress={() => props.favourite ? console.log('Already favourite') : props.onPress() } 
+                            />
+                            <Icon 
+                                raised //shows it like a button
+                                reverse //icon of one color and surrounding of another
+                                name={ 'pencil'}
+                                type='font-awesome'
+                                color='#512DAB'
+                                onPress={() => props.toggleModal() } 
+                            />
                         </View>
-                    </Modal>
-                </Card>
+                        <Modal
+                            animationType={'slide'}
+                            transparent={false}
+                            visible={props.showModal}
+                            onDismiss={() => {props.toggleModal(); props.resetForm()} }
+                            onRequestClose={() => {props.toggleModal(); props.resetForm()}} // kind of similar to dismiss
+                            >
+                            <View style={styles.modal}>
+                                <Rating showRating fractions="{1}" startingValue="{3.3}" onFinishRating={(value) => props.comment.rating = value} />
+                                <Input
+                                    placeholder="Author"
+                                    leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                                    onChangeText={(value) => props.comment.author = value}
+                                    />
+                                <Input
+                                    placeholder="Comment"
+                                    leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
+                                    onChangeText={(value) => props.comment.comment = value}
+                                    />
+                                <View style={{margin: 20}}>
+                                    <Button 
+                                        raised
+                                        onPress={() => {props.toggleModal(); props.submitForm(props.comment)} }
+                                        color='#512DAB'
+                                        title='SUBMIT'
+                                        />
+                                </View>
+                                <View style={{margin: 20}}>
+                                    <Button 
+                                        raised
+                                        color='grey'
+                                        title='CANCEL'
+                                        onPress={() => {props.toggleModal(); props.resetForm()}}
+                                        />
+                                </View>
+                            </View>
+                        </Modal>
+                    </Card>
+                </Animatable.View>
             );
         }
         else {
@@ -114,13 +117,15 @@ function RenderComments(props) {
     }
 
     return(
-        <Card title="Comments">
-            <FlatList
-                data={comments}
-                renderItem={RenderCommentItem}
-                keyExtractor={item => item.id.toString()}
-                />
-        </Card>
+        <Animatable.View animation='fadeInUp' duration={2000} delay={1000}>
+            <Card title="Comments">
+                <FlatList
+                    data={comments}
+                    renderItem={RenderCommentItem}
+                    keyExtractor={item => item.id.toString()}
+                    />
+            </Card>
+        </Animatable.View>
     );
 }
 
